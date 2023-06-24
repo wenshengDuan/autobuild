@@ -4,7 +4,7 @@
   "module": "commonjs",
   "description": "<!--  * @Author: duanwensheng duanwensheng@58.com  * @Date: 2023-06-16 16:44:50  * @LastEditors: duanwensheng duanwensheng@58.com  * @LastEditTime: 2023-06-16 16:45:38  * @FilePath: /autobuild/README.md  --> # autobuild 后台自动打包系统 后端服务",
   "scripts": {
-    "dev-path": "ts-node-dev -r tsconfig-paths/register ./src/app.ts",
+    "dev-path": "cross-env NODE_ENV=dev ts-node-dev -r tsconfig-paths/register ./src/app.ts",
     "dev": "ts-node-dev ./src/app.ts",
     "start": "nodemon --watch src/ -e ts --exec ts-node ./src/app.ts",
     "build": "npx tsc"
@@ -24,6 +24,7 @@
     "@types/koa": "^2.13.6",
     "@types/koa-json": "^2.0.20",
     "@types/koa-router": "^7.4.4",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.22",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",

@@ -1,8 +1,8 @@
 /*
  * @Author: duanwensheng duanwensheng@58.com
  * @Date: 2023-06-23 16:19:28
- * @LastEditors: duanwensheng duanwensheng@58.com
- * @LastEditTime: 2023-06-23 17:28:44
+ * @LastEditors: duanwensheng 824201954@qq.com
+ * @LastEditTime: 2023-06-23 17:57:25
  * @FilePath: /autobuild/src/common/init.ts
  */
 import Koa, { Context } from 'koa';
@@ -12,6 +12,7 @@ import Router from 'koa-router';
 import path from 'path';
 import fs from 'fs';
 
+import globalException from './exceptions/globalException';
 
 class InitManager {
     static app: Koa;
@@ -23,8 +24,9 @@ class InitManager {
         InitManager.listen();
     }
 
-    static loadMiddlewares() {
+    static async loadMiddlewares() {
         const app = InitManager.app;
+        app.use(globalException)
         app.use(body());
         app.use(json());
     }
