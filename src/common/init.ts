@@ -2,7 +2,7 @@
  * @Author: duanwensheng duanwensheng@58.com
  * @Date: 2023-06-23 16:19:28
  * @LastEditors: duanwensheng 824201954@qq.com
- * @LastEditTime: 2023-06-23 17:57:25
+ * @LastEditTime: 2023-06-25 17:22:54
  * @FilePath: /autobuild/src/common/init.ts
  */
 import Koa, { Context } from 'koa';
@@ -13,6 +13,7 @@ import path from 'path';
 import fs from 'fs';
 
 import globalException from './exceptions/globalException';
+import { DataBase } from '@/orm/db';
 
 class InitManager {
     static app: Koa;
@@ -21,6 +22,7 @@ class InitManager {
         InitManager.app = app;
         InitManager.loadMiddlewares();
         InitManager.loadRouters();
+        DataBase.connect();
         InitManager.listen();
     }
 
@@ -84,8 +86,8 @@ class InitManager {
         if (!filePaths.length) return;
         
         for (let file of filePaths) {
-            const route = require(file);
-            
+            const route = require(file).default;
+            console.log('route', route);
             if (InitManager.isRouter(route)) {
                 rootRouter.use(route.routes(), route.allowedMethods())
             }
