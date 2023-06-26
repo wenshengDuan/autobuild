@@ -2,7 +2,7 @@
  * @Author: duanwensheng duanwensheng@58.com
  * @Date: 2023-06-23 16:19:28
  * @LastEditors: duanwensheng 824201954@qq.com
- * @LastEditTime: 2023-06-25 17:22:54
+ * @LastEditTime: 2023-06-26 22:25:33
  * @FilePath: /autobuild/src/common/init.ts
  */
 import Koa, { Context } from 'koa';
@@ -13,16 +13,16 @@ import path from 'path';
 import fs from 'fs';
 
 import globalException from './exceptions/globalException';
-import { DataBase } from '@/orm/db';
+import { DataBase } from '@/modules/dborm';
 
 class InitManager {
     static app: Koa;
     
     static init(app: Koa) {
         InitManager.app = app;
+        DataBase.connect();
         InitManager.loadMiddlewares();
         InitManager.loadRouters();
-        DataBase.connect();
         InitManager.listen();
     }
 
