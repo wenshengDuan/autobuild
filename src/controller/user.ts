@@ -2,17 +2,22 @@
  * @Author: duanwensheng 824201954@qq.com
  * @Date: 2023-06-26 22:33:36
  * @LastEditors: duanwensheng 824201954@qq.com
- * @LastEditTime: 2023-06-26 23:49:55
+ * @LastEditTime: 2023-06-27 01:15:22
  * @FilePath: /autobuild/src/controller/user.ts
  */
 import { Context } from 'koa';
 import { post, get } from '@/decorator/router';
+import { Controller } from '@/decorator/controller';
 import { success, fail } from '@/common/resResult';
-
+import { UserDao } from '@/modules/user/dao/user';
+@Controller('/user')
 class UserController {
-    @post('/addddd')
+    @post('/add')
     async addUserInfo(ctx: Context) {
         const userInfo = ctx.request.body;
-        ctx.body = success();
+        const result = await UserDao.addUser(userInfo);
+        ctx.body = success(result);
     }
+
+    buy() {}
 }
