@@ -2,7 +2,7 @@
  * @Author: duanwensheng duanwensheng@58.com
  * @Date: 2023-06-23 16:19:28
  * @LastEditors: duanwensheng 824201954@qq.com
- * @LastEditTime: 2023-06-26 22:25:33
+ * @LastEditTime: 2023-06-26 23:48:48
  * @FilePath: /autobuild/src/common/init.ts
  */
 import Koa, { Context } from 'koa';
@@ -36,6 +36,8 @@ class InitManager {
     static loadRouters() {
         // 初始化一级路由
         const rootRouter = InitManager.initRootRouer();
+        // 挂在全局变量
+        InitManager.app.context.router = rootRouter;
         // 加载子级路由 并挂载到一级路由上
         InitManager.loadchildrenRouter(rootRouter);   
     }
@@ -49,10 +51,17 @@ class InitManager {
     }
     
     static async loadchildrenRouter(rootRouter: Router) {
-        const routerdir = path.join(process.cwd(), './src/router');
+        // const routerdir = path.join(process.cwd(), './src/router');
+        const routerdir = path.join(process.cwd(), './src/controller');
         const filePaths = InitManager.readDirRecursively(routerdir);
         console.log('filePaths', filePaths);
-        InitManager.nestedRouters(rootRouter, filePaths);
+        InitManager.initController(filePaths);
+        // InitManager.nestedRouters(rootRouter, filePaths);
+    }
+
+    // 初始化控制器
+    static initController(filePaths: string[]){
+        filePaths.forEach(file => require(file));
     }
 
     // 递归获取目录下所有文件路径并返回
