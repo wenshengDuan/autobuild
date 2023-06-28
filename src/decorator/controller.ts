@@ -2,14 +2,14 @@
  * @Author: duanwensheng 824201954@qq.com
  * @Date: 2023-06-26 22:34:34
  * @LastEditors: duanwensheng 824201954@qq.com
- * @LastEditTime: 2023-06-27 01:26:28
+ * @LastEditTime: 2023-06-28 21:11:24
  * @FilePath: /autobuild/src/decorator/controller.ts
  */
 import InitManager from '@/common/init';
 import 'reflect-metadata';
 
 type TargetClass = new (...args:any) => any
-export const Controller = (modulePath: string = '/') => {
+export const controller = (modulePath: string = '/') => {
     const getFullPath = (reqPath:string) => {
         if(modulePath === '/') {
             modulePath = '';
